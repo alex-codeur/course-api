@@ -2,12 +2,14 @@ const router = require("express").Router();
 
 const { ensureAuthenticated } = require("../middleware/authMiddleware");
 const { register, login, verify, forgotPassword, resetPassword, changePassword } = require("../controllers/authController");
+const { validationRules, validate } = require("../validations/userValidator");
+const { validationRules: passwordValidationRules, validate: passwordValidate } = require("../validations/changePasswordValidator,");
 
 router.post("/login", async (req, res) => {
     await login(req.body, res);
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", validationRules(), validate, async (req, res) => {
     await register(req.body, "user", res);
 });
 
