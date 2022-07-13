@@ -2,11 +2,11 @@ const { check, validationResult } = require("express-validator");
 
 const validationRules = () => {
     return [
-        check("oldPassport")
+        check("oldPassword")
             .trim()
             .isLength({ min: 6, max: 16 })
             .withMessage("Old password must be between 6 and 16 characters"),
-        check("newPassport")
+        check("newPassword")
             .trim()
             .isLength({ min: 6, max: 16 })
             .withMessage("New password must be between 6 and 16 characters")

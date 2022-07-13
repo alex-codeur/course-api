@@ -11,7 +11,7 @@ const validationRules = () => {
             .trim()
             .isLength({ min: 1, max: 20 })
             .withMessage("Name must be between 1 and 20 characters long"),
-        check("passport")
+        check("password")
             .trim()
             .isLength({ min: 6, max: 16 })
             .withMessage("Password must be between 6 and 16 characters")
