@@ -1,3 +1,7 @@
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
+
 const courseModel = require("../models/courseModel");
 const commentModel = require("../models/commentModel");
 const paginate = require("express-paginate");
@@ -59,9 +63,40 @@ const getOne = async (req, res) => {
 };
 
 const addOne = async (req, res) => {
+    let filename;
+
+    if (req.file !== null) {
+        try {
+            if (
+                req.file.detectedMimeType != "image/jpg" &&
+                req.file.detectedMimeType != "image/png" &&
+                req.file.detectedMimeType != "image/jpeg"
+            )
+            {
+                throw Error("Invalid file");
+            }
+    
+            if (req.file.size > 500000) {
+                throw Error("max size");
+            }
+        } catch (err) {
+            return res.status(201).json(err);
+        }
+
+        filename = req.body.userId + Date.now() + '.jpg';
+
+        await pipeline(
+            req.file.stream,
+            fs.createWriteStream(
+                `${__dirname}/../client/public/uploads/image/${filename}`
+            )
+        );
+    }
+
     try {
         const newRecord = new courseModel({
             ...req.body,
+            imageUrl: req.file !== null ? "./uploads/courses/" + filename : "",
             createdBy: req.user._id
         });
 

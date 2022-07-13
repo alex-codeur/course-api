@@ -100,6 +100,15 @@ const login = async (data, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    res.cookie('token', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000),
+    });
+    res.status(200).json({ msg: 'user logged out!' });
+};
+  
+
 const verify = async (data, res) => {
     try {
         let { code } = data;
@@ -244,6 +253,7 @@ const validateEmail = async (email) => {
 module.exports = {
     register,
     login,
+    logout,
     verify,
     forgotPassword,
     resetPassword,
