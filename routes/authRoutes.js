@@ -9,6 +9,15 @@ const { validationRules: passwordValidationRules, validate: passwordValidate } =
 // const { uploadImage } = require("../controllers/uploadController");
 
 router.post("/login", async (req, res) => {
+    /*
+        #swagger.tags = ['Auth']
+        #swagger.parameters['obj] = {
+            in: 'body',
+            required: true,
+            scheme: { $ref: '#/definitions/LoginModel' }
+        }
+    */
+
     await login(req.body, res);
 });
 

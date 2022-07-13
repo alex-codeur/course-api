@@ -25,21 +25,57 @@ const upload = multer({
 });
 
 router.get("/courses", async (req, res) => {
+    // #swagger.tags = ['Posts']
+
     await getAll(req, res);
+});
+
+router.get("/courses/top", async (req, res) => {
+    // #swagger.tags = ['Posts']
+
+    await getTopCourses(req, res);
 });
 
 router.get("/courses/:id", async (req, res) => {
     await getOne(req, res);
 });
 
-router.post(
-    "/courses", 
-    ensureAuthenticated, 
-    ensureAuthorized(["admin"]), 
-    upload.any("files")
-);
+router.get("/courses/slug/:slug", async (req, res) => {
+    await getOneBySlug(req, res);
+});
+
+router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), upload.any("files"));
 
 router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), validationRules(), validate, async (req, res) => {
+    /*
+        #swagger.tags = ['Posts']
+        #swagger.consumes = ['multipart/form-data']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+        #swagger.parameters['file'] = {
+            in: 'formdata',
+            required: true,
+            type: 'file'
+        }
+
+        #swagger.parameters['category'] = {
+            in: 'formdata',
+            required: true,
+            type: 'string'
+        }
+        #swagger.parameters['title'] = {
+            in: 'formdata',
+            required: true,
+            type: 'string'
+        }
+        #swagger.parameters['body'] = {
+            in: 'formdata',
+            required: true,
+            type: 'string'
+        }
+    */
+    
     await addOne(req, res);
 });
 
@@ -48,19 +84,23 @@ router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), valida
 // });
 
 router.put("/courses/:id", ensureAuthenticated, ensureAuthorized(["admin"]), async (req, res) => {
+    /*
+        #swagger.tags = ['Posts']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            required: true,
+            type: 'string'
+        }
+    */
+    
     await updateOne(req, res);
 });
 
 router.delete("/courses/:id", ensureAuthenticated, ensureAuthorized(["admin"]), async (req, res) => {
     await removeOne(req, res);
-});
-
-router.get("/courses/top", async (req, res) => {
-    await getTopCourses(req, res);
-});
-
-router.get("/courses/slug/:slug", async (req, res) => {
-    await getOneBySlug(req, res);
 });
 
 module.exports = router;

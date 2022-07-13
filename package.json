@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "start-gendoc": "node swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
