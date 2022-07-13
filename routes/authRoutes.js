@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const multer = require("multer");
-const upload = multer();
+// const multer = require("multer");
+// const upload = multer();
 
 const { ensureAuthenticated } = require("../middleware/authMiddleware");
 const { register, login, verify, forgotPassword, resetPassword, changePassword } = require("../controllers/authController");
 const { validationRules, validate } = require("../validations/userValidator");
 const { validationRules: passwordValidationRules, validate: passwordValidate } = require("../validations/changePasswordValidator,");
-const { uploadImage } = require("../controllers/uploadController");
+// const { uploadImage } = require("../controllers/uploadController");
 
 router.post("/login", async (req, res) => {
     await login(req.body, res);
@@ -37,8 +37,8 @@ router.post("/changePassword", ensureAuthenticated, async (req, res) => {
 });
 
 // upload
-router.post('/upload', upload.single('file'), async (req, res) => {
-    await uploadImage(req, res);
-});
+// router.post('/upload', upload.single('file'), async (req, res) => {
+//     await uploadImage(req, res);
+// });
 
 module.exports = router;

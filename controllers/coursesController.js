@@ -1,6 +1,6 @@
-const fs = require("fs");
-const { promisify } = require("util");
-const pipeline = promisify(require("stream").pipeline);
+// const fs = require("fs");
+// const { promisify } = require("util");
+// const pipeline = promisify(require("stream").pipeline);
 
 const courseModel = require("../models/courseModel");
 const commentModel = require("../models/commentModel");
@@ -63,42 +63,46 @@ const getOne = async (req, res) => {
 };
 
 const addOne = async (req, res) => {
-    let filename;
+    // let filename;
 
-    if (req.file !== null) {
-        try {
-            if (
-                req.file.detectedMimeType != "image/jpg" &&
-                req.file.detectedMimeType != "image/png" &&
-                req.file.detectedMimeType != "image/jpeg"
-            )
-            {
-                throw Error("Invalid file");
-            }
+    // if (req.file !== null) {
+    //     try {
+    //         if (
+    //             req.file.detectedMimeType != "image/jpg" &&
+    //             req.file.detectedMimeType != "image/png" &&
+    //             req.file.detectedMimeType != "image/jpeg"
+    //         )
+    //         {
+    //             throw Error("Invalid file");
+    //         }
     
-            if (req.file.size > 500000) {
-                throw Error("max size");
-            }
-        } catch (err) {
-            return res.status(201).json(err);
-        }
+    //         if (req.file.size > 500000) {
+    //             throw Error("max size");
+    //         }
+    //     } catch (err) {
+    //         return res.status(201).json(err);
+    //     }
 
-        filename = req.body.userId + Date.now() + '.jpg';
+    //     filename = req.body.userId + Date.now() + '.jpg';
 
-        await pipeline(
-            req.file.stream,
-            fs.createWriteStream(
-                `${__dirname}/../client/public/uploads/image/${filename}`
-            )
-        );
-    }
+    //     await pipeline(
+    //         req.file.stream,
+    //         fs.createWriteStream(
+    //             `${__dirname}/../client/public/uploads/image/${filename}`
+    //         )
+    //     );
+    // }
+
+    const newRecord = new courseModel({
+        ...req.body,
+        // imageUrl: req.file !== null ? "./uploads/courses/" + filename : "",
+        createdBy: req.user._id
+    });
 
     try {
-        const newRecord = new courseModel({
-            ...req.body,
-            imageUrl: req.file !== null ? "./uploads/courses/" + filename : "",
-            createdBy: req.user._id
-        });
+        if (!newRecord.slug) {
+            newRecord.slug = generateSlug(newRecord.title);
+        }
 
         await newRecord.save();
 
@@ -195,6 +199,19 @@ const getOneBySlug = async (req, res) => {
             success: false,
         });
     }
+};
+
+const generateSlug = (title) => {
+    const slugText = title.toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "")
+        .replace(/\-\-+/g, "-")
+        .replace(/^-+/, "")
+        .replace(/-+$/, "");
+
+    return slugText;
 };
 
 module.exports = {
