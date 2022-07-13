@@ -17,6 +17,8 @@ router.get("/videos/top", async (req, res) => {
 });
 
 router.get("/videos/:id", async (req, res) => {
+    // #swagger.tags = ['Posts']
+    
     await getOne(req, res);
 });
 
@@ -37,10 +39,26 @@ router.post("/videos", ensureAuthenticated, ensureAuthorized(["admin"]), validat
 });
 
 router.put("/videos/:id", ensureAuthenticated, ensureAuthorized(["admin"]), validationRules(), validate, async (req, res) => {
+    /*  #swagger.tags = ['Posts']
+        #swagger.security = [{
+        "Authorization": []
+        }]
+    	#swagger.parameters['obj'] = {
+            in: 'body',
+            required: true,
+            schema: { $ref: "#/definitions/VideoModel" }
+    } */  
+    
     await updateOne(req, res);
 });
 
 router.delete("/videos/:id", ensureAuthenticated, ensureAuthorized(["admin"]), async (req, res) => {
+    /*  #swagger.tags = ['Posts']
+        #swagger.security = [{
+        "Authorization": []
+        }]
+    */ 
+    
     await removeOne(req, res);
 });
 

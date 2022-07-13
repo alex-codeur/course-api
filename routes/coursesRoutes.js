@@ -37,44 +37,48 @@ router.get("/courses/top", async (req, res) => {
 });
 
 router.get("/courses/:id", async (req, res) => {
+    // #swagger.tags = ['Posts'] 
+
     await getOne(req, res);
 });
 
 router.get("/courses/slug/:slug", async (req, res) => {
+    // #swagger.tags = ['Posts'] 
+    
     await getOneBySlug(req, res);
 });
 
 router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), upload.any("files"));
 
 router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), validationRules(), validate, async (req, res) => {
-    /*
-        #swagger.tags = ['Posts']
+    /*  #swagger.tags = ['Posts']
         #swagger.consumes = ['multipart/form-data']
         #swagger.security = [{
-            "Authorization": []
+        "Authorization": []
         }]
         #swagger.parameters['file'] = {
-            in: 'formdata',
+            in: 'formData',
             required: true,
             type: 'file'
         }
-
-        #swagger.parameters['category'] = {
-            in: 'formdata',
+      
+    	#swagger.parameters['category'] = {
+            in: 'formData',
             required: true,
-            type: 'string'
-        }
-        #swagger.parameters['title'] = {
-            in: 'formdata',
+            type: 'string',
+      } 
+      #swagger.parameters['title'] = {
+            in: 'formData',
             required: true,
-            type: 'string'
-        }
-        #swagger.parameters['body'] = {
-            in: 'formdata',
+            type: 'string',
+      } 
+      #swagger.parameters['body'] = {
+            in: 'formData',
             required: true,
-            type: 'string'
-        }
-    */
+            type: 'string',
+      } 
+    
+    */ 
     
     await addOne(req, res);
 });
@@ -84,22 +88,26 @@ router.post("/courses", ensureAuthenticated, ensureAuthorized(["admin"]), valida
 // });
 
 router.put("/courses/:id", ensureAuthenticated, ensureAuthorized(["admin"]), async (req, res) => {
-    /*
-        #swagger.tags = ['Posts']
+    /*  #swagger.tags = ['Posts']
         #swagger.security = [{
-            "Authorization": []
+        "Authorization": []
         }]
-        #swagger.parameters['obj'] = {
+    	#swagger.parameters['obj'] = {
             in: 'body',
             required: true,
-            type: 'string'
-        }
-    */
+            schema: { $ref: "#/definitions/StoryModel" }
+    } */  
     
     await updateOne(req, res);
 });
 
 router.delete("/courses/:id", ensureAuthenticated, ensureAuthorized(["admin"]), async (req, res) => {
+    /*  #swagger.tags = ['Posts']
+        #swagger.security = [{
+        "Authorization": []
+        }]
+    */  
+    
     await removeOne(req, res);
 });
 

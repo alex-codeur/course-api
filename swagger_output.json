@@ -56,12 +56,8 @@
             "name": "obj",
             "in": "body",
             "required": true,
-            "scheme": {
-              "$ref": "#/definitions/LoginModel"
-            },
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/LoginModel"
             }
           }
         ],
@@ -77,8 +73,20 @@
     },
     "/auth/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterModel"
+            }
+          }
+        ],
         "responses": {
           "422": {
             "description": "Unprocessable Entity"
@@ -88,30 +96,83 @@
     },
     "/auth/verify": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerifyEmailModel"
+            }
+          }
+        ],
         "responses": {}
       }
     },
     "/auth/forgotPassword": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ForgotPassWordModel"
+            }
+          }
+        ],
         "responses": {}
       }
     },
     "/auth/resetPassword": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordModel"
+            }
+          }
+        ],
         "responses": {}
       }
     },
     "/auth/changePassword": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
-        "parameters": [],
-        "responses": {}
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordModel"
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/users": {
@@ -191,6 +252,9 @@
     },
     "/api/profile": {
       "get": {
+        "tags": [
+          "Profile"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -203,11 +267,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "put": {
+        "tags": [
+          "Profile"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserModel"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -215,11 +296,19 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/categories": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -243,8 +332,20 @@
         }
       },
       "post": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryModel"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -252,11 +353,19 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/categories/{id}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -279,6 +388,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -286,6 +398,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryModel"
+            }
           }
         ],
         "responses": {
@@ -295,9 +415,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -317,7 +445,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/courses": {
@@ -358,25 +491,25 @@
         "parameters": [
           {
             "name": "file",
-            "in": "formdata",
+            "in": "formData",
             "required": true,
             "type": "file"
           },
           {
             "name": "category",
-            "in": "formdata",
+            "in": "formData",
             "required": true,
             "type": "string"
           },
           {
             "name": "title",
-            "in": "formdata",
+            "in": "formData",
             "required": true,
             "type": "string"
           },
           {
             "name": "body",
-            "in": "formdata",
+            "in": "formData",
             "required": true,
             "type": "string"
           }
@@ -418,6 +551,9 @@
     },
     "/api/courses/{id}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -456,8 +592,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/StoryModel"
             }
           }
         ],
@@ -476,6 +611,9 @@
         ]
       },
       "delete": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -495,11 +633,19 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/courses/slug/{slug}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -601,6 +747,9 @@
     },
     "/api/videos/{id}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -623,6 +772,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -630,6 +782,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VideoModel"
+            }
           }
         ],
         "responses": {
@@ -642,9 +802,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -664,13 +832,30 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/comments": {
       "post": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CommentModel"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -678,11 +863,19 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/comments/{id}": {
       "delete": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -702,7 +895,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     }
   },
