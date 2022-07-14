@@ -3,7 +3,7 @@ const router = require("express").Router();
 // const upload = multer();
 
 const { ensureAuthenticated } = require("../middleware/authMiddleware");
-const { register, login, verify, forgotPassword, resetPassword, changePassword } = require("../controllers/authController");
+const { register, login, logout, verify, forgotPassword, resetPassword, changePassword } = require("../controllers/authController");
 const { validationRules, validate } = require("../validations/userValidator");
 const { validationRules: passwordValidationRules, validate: passwordValidate } = require("../validations/changePasswordValidator,");
 // const { uploadImage } = require("../controllers/uploadController");
